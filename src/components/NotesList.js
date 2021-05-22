@@ -1,28 +1,30 @@
 import React from 'react';
+import notesStore from '../store/index';
+import styled from 'styled-components';
+
 import Note from './Note';
 import AddNote from '../components/AddNote';
 
-function NotesList({notes, handleAddNote, handleDeleteNote}) {
+function NotesList() {
+
+    const { filter, notes } = notesStore();
+
     return (
-        <div>
-            <div className="notes-list">
-                <AddNote 
-                    handleAddNote={handleAddNote} 
-                    />
-                {
-                    notes
-                    .map(note => <Note
-                        key={note.id} 
-                        id={note.id} 
-                        text={note.text} 
-                        date={note.date} 
-                        handleDeleteNote={handleDeleteNote} 
-                            />
-                        )
-                }
-            </div>
-        </div>
+        <List>
+            <AddNote />
+
+            { notes.filter(note => note.content.toLowerCase().includes(filter))
+                    .map(note => <Note noteData={note} /> )}
+                    
+        </List>
     )
 }
 
 export default NotesList
+
+const List = styled.div`
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    margin: 10px 10px;
+`

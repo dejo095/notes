@@ -1,51 +1,44 @@
+import { useEffect } from "react";
+import { db } from "./firebase";
+import notesStore from "./store";
+import styled from 'styled-components';
+
+import Navbar from "./components/Navbar";
 import NotesList from "./components/NotesList";
 import Search from "./components/Search";
-import { nanoid } from 'nanoid';
-import { useState } from "react";
 
 function App() {
 
-  const [ notes, setNotes ] = useState([
-    {
-        id: nanoid(),
-        text: 'My first note',
-        date: "15/04/2021"
-    },
-    {
-        id: nanoid(),
-        text: 'My second note',
-        date: "05/01/2021"
-    }
-  ]);
-
-  const [ searchText, setSearchText ] = useState('');
-
-  const addNote = (text) => {
-    const date = new Date().toLocaleDateString();
-    const newNote = {
-      id: nanoid(),
-      text,
-      date
-    }
-    const newNotes = [...notes, newNote];
-    setNotes(newNotes);
-  }
-
-  const deleteNote = (id) => {
-    const newNotes = notes.filter(note => note.id != id);
-    setNotes(newNotes);
-  }
+  const _setNotes = notesStore(state => state.setNotes);
+  
+  useEffect(() => {
+    db.collection('notes')
+      .orderBy('timestamp', 'desc')
+      .onSnapshot(snapshot => {
+        _setNotes(snapshot.docs.map(doc => {
+          return {
+            id: doc.id, 
+            content: doc.data().content,
+            timestamp: doc.data().timestamp,
+            state: doc.data().active
+          }
+        }))
+      })
+  }, []);
 
   return (
-    <div className="container">
-      <Search handleSearchNotes={setSearchText} />
-      <NotesList 
-        notes={notes.filter(note => note.text.toLowerCase().includes(searchText))} 
-        handleAddNote={addNote} 
-        handleDeleteNote={deleteNote} 
-      />
-    </div>
+    <Container>
+      <Navbar />
+      <Search />
+      <NotesList />
+    </Container>
   );
 }
 
 export default App;
+
+const Container = styled.main`
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+`
