@@ -1,21 +1,26 @@
 import { useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { db } from "./firebase";
 import notesStore from "./store";
-import styled from 'styled-components';
+import { AuthProvider } from './contexts/AuthContext';
+import PrivateRoute from './PrivateRoute';
 
-import Navbar from "./components/Navbar";
-import NotesList from "./components/NotesList";
-import Search from "./components/Search";
+import styled from 'styled-components';
+import Dashboard from './components/Dashboard';
+import Register from './components/Register';
+import Login from './components/Login';
+import ForgotPassword from "./components/ForgotPassword";
+import UpdateProfile from "./components/UpdateProfile";
 
 function App() {
 
-  const _setNotes = notesStore(state => state.setNotes);
+  const { setNotes } = notesStore();
   
   useEffect(() => {
     db.collection('notes')
       .orderBy('timestamp', 'desc')
       .onSnapshot(snapshot => {
-        _setNotes(snapshot.docs.map(doc => {
+        setNotes(snapshot.docs.map(doc => {
           return {
             id: doc.id, 
             content: doc.data().content,
@@ -28,9 +33,17 @@ function App() {
 
   return (
     <Container>
-      <Navbar />
-      <Search />
-      <NotesList />
+      <Router>
+        <AuthProvider>
+          <Switch>
+            <PrivateRoute exact path="/" component={Dashboard} />
+            <PrivateRoute path="/update-profile" component={UpdateProfile} />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
+            <Route path="/forgot-password" component={ForgotPassword} />
+          </Switch>
+        </AuthProvider>
+      </Router>
     </Container>
   );
 }

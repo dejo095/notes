@@ -4,6 +4,10 @@ import { db } from '../firebase';
 import { devtools } from 'zustand/middleware';
 
 const store = (set, get) => ({
+    currentUser: null,
+    setCurrentUser: (value) => set(state => state.currentUser = value),
+    login: (payload) => set(state => state.user = payload),
+    logout: () => set(state => state.user = null),
     charLimit: 200,
     input: "",
     setInput: (input) => set({input}),
@@ -34,7 +38,7 @@ const store = (set, get) => ({
             .doc(id)
             .delete();
     }),
-    count: () => get().notes.length
+    count: () => get().notes.length,
 });
 
 const notesStore = create(devtools(store));
