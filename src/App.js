@@ -1,7 +1,4 @@
-import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { db } from "./firebase";
-import notesStore from "./store";
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './PrivateRoute';
 
@@ -13,23 +10,6 @@ import ForgotPassword from "./components/ForgotPassword";
 import UpdateProfile from "./components/UpdateProfile";
 
 function App() {
-
-  const { setNotes } = notesStore();
-  
-  useEffect(() => {
-    db.collection('notes')
-      .orderBy('timestamp', 'desc')
-      .onSnapshot(snapshot => {
-        setNotes(snapshot.docs.map(doc => {
-          return {
-            id: doc.id, 
-            content: doc.data().content,
-            timestamp: doc.data().timestamp,
-            state: doc.data().active
-          }
-        }))
-      })
-  }, []);
 
   return (
     <Container>

@@ -26,8 +26,8 @@ const store = (set, get) => ({
         e.preventDefault();
 
         db.collection('notes').add({
+            owner: get().currentUser.uid,
             content: state.input,
-            active: true,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
         state.setInput('');

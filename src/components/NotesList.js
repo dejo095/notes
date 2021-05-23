@@ -14,7 +14,7 @@ function NotesList() {
             <AddNote />
 
             { notes.filter(note => note.content.toLowerCase().includes(filter))
-                    .map(note => <Note noteData={note} /> )}
+                    .map(note => <Note key={note.id} noteData={note} /> )}
                     
         </List>
     )
