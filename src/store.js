@@ -8,11 +8,10 @@ const store = (set, get) => ({
     setCurrentUser: (value) => set(state => state.currentUser = value),
     login: (payload) => set(state => state.user = payload),
     logout: () => set(state => state.user = null),
-    charLimit: 200,
-    input: "",
-    setInput: (input) => set({input}),
+    noteMinChars: 5,
+    noteMaxChars: 50,
     filter: "",
-    setFilter: (filter) => set({filter}),
+    setFilter: (text) => set(state => state.filter = text),
     notes: [],
     setNotes: (notes) => set((state) => ({
         ...state,
@@ -22,15 +21,12 @@ const store = (set, get) => ({
         set((state) => ({
         notes: [...state.notes, note ] 
     })),
-    createNote: (e) => set((state) => {
-        e.preventDefault();
-
+    saveNote: (note) => set(state => {
         db.collection('notes').add({
             owner: get().currentUser.uid,
-            content: state.input,
+            content: note,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
-        state.setInput('');
     }),
     removeNote: (id) => set(() => {
         db

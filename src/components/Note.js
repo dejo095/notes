@@ -5,14 +5,21 @@ import { VscTrash } from 'react-icons/vsc';
 
 function Note(props) {
 
-    const { removeNote } = useStore();
+    const removeNote = useStore(state => state.removeNote);
+
+    const date = props.noteData.timestamp?.toDate().toLocaleString();
+
+    const handleOnClick = (e) => {
+        e.preventDefault();
+        removeNote(props.noteData.id);
+    }
 
     return (
         <NoteDiv>
             <span>{props.noteData.content}</span>
             <div className="note-footer">
-                <small>created: {props.noteData.timestamp?.toDate().toLocaleString()}</small>
-                <VscTrash onClick={ () => removeNote(props.noteData.id) } className="delete-icon" size="1.3em" />
+                <small>created: {date}</small>
+                <VscTrash onClick={handleOnClick} className="delete-icon" size="1.3em" />
             </div>
         </NoteDiv>
     )

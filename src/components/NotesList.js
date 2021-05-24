@@ -7,7 +7,8 @@ import AddNote from '../components/AddNote';
 
 function NotesList() {
 
-    const { filter, notes } = useStore();
+    const filter = useStore(state => state.filter);
+    const notes = useStore(state => state.notes);
 
     return (
         <List>

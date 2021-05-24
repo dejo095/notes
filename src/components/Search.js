@@ -1,22 +1,36 @@
-import React from 'react'
-import { MdSearch, MdHighlightOff } from 'react-icons/md';
+import React, { useState } from 'react'
 import useStore from '../store';
 import styled from 'styled-components';
+import { MdSearch, MdHighlightOff } from 'react-icons/md';
 
 function Search() {
 
-    const { filter, setFilter } = useStore();
+    const setFilter = useStore(state => state.setFilter);
+    const [ filterValue, setFilterValue ] = useState('');
+
+    const handleChange = (e) => {
+        setFilterValue(e.target.value);
+        if(e.target.value.length >= 3) {
+            setFilter(e.target.value);
+        }
+    }
+
+    const handleReset = (e) => {
+        e.preventDefault();
+        setFilterValue('');
+        setFilter('');
+    }
 
     return (
         <SearchBar>
             <MdSearch className="search-icon" size="1.5em" />
             <Input 
-                value={filter} 
-                onChange={ e => setFilter(e.target.value) } 
+                value={filterValue}
                 type="text" 
                 placeholder="Type to filter notes..." 
+                onChange={handleChange} 
             />
-            <MdHighlightOff onClick={ e => setFilter('') } className="close-icon" size="1.3em" />
+            <MdHighlightOff onClick={handleReset} className="close-icon" size="1.3em" />
         </SearchBar>
     )
 }

@@ -1,17 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useStore from '../store';
 import styled from 'styled-components';
 
 function AddNote() {
     
-    const { input, setInput, createNote } = useStore();
+    const saveNote = useStore(state => state.saveNote);
+    const noteMinChars = useStore(state => state.noteMinChars);
+    const noteMaxChars = useStore(state => state.noteMaxChars);
+
+    const [ noteInput, setNoteInput ] = useState('');
+    const [ valid, setValid ] = useState(false);
+    
+    const handleChange = (e) => {
+        if(e.target.value.length <= noteMaxChars) {
+            setNoteInput(e.target.value);
+            if(e.target.value.length > noteMinChars) {
+                setValid(true);
+            }
+        }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        saveNote(noteInput);
+        setNoteInput('');
+        setValid(false);
+    }
 
     return (
         <NoteDiv className="new">
-            <Textarea value={input} onChange={ e => setInput(e.target.value) } cols="10" rows="4" placeholder="Type to add new note"></Textarea>
+            <Textarea value={noteInput} onChange={handleChange} cols="10" rows="4" placeholder="Type to add new note"></Textarea>
             <div className="note-footer">
-                <small></small>
-                <Button onClick={ (e) => createNote(e) } className="save">Save</Button>
+                <small>{ noteMaxChars - Number(noteInput.length) } characters remaining</small>
+                <Button disabled={!valid} onClick={handleSubmit} className="save">Save</Button>
             </div>
         </NoteDiv>
     )
