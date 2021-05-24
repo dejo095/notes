@@ -12,11 +12,13 @@ function AddNote() {
     const [ valid, setValid ] = useState(false);
     
     const handleChange = (e) => {
+        if(e.target.value.length >= noteMinChars) {
+            setValid(true);
+        } else {
+            setValid(false);
+        }
         if(e.target.value.length <= noteMaxChars) {
             setNoteInput(e.target.value);
-            if(e.target.value.length > noteMinChars) {
-                setValid(true);
-            }
         }
     }
 

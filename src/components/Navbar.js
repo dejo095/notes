@@ -27,7 +27,7 @@ function Navbar() {
         <Nav>
             <h1>NotesApp</h1>
             <Counter>
-                <h3><small>Logged in as: </small><a onClick={handleLogout}>{ currentUser && currentUser.email }</a></h3>
+                <h3><small>Logged in as: </small><a onClick={handleLogout}>{ currentUser && currentUser.displayName || currentUser.email }</a></h3>
                 <>
                 { count > 0 
                     ? <p>You have <span><strong>{ count }</strong></span> notes!</p> 

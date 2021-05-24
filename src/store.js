@@ -9,7 +9,7 @@ const store = (set, get) => ({
     login: (payload) => set(state => state.user = payload),
     logout: () => set(state => state.user = null),
     noteMinChars: 5,
-    noteMaxChars: 50,
+    noteMaxChars: 155,
     filter: "",
     setFilter: (text) => set(state => state.filter = text),
     notes: [],
