@@ -36,7 +36,7 @@ export function AuthProvider({ children }) {
             setLoading(false);
         })
 
-        return unsubscribe; // this logouts
+        return unsubscribe; // this unsubscribes from stream listener
     }, []);
 
 
