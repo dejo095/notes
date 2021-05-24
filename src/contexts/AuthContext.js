@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import notesStore from '../store';
+import useStore from '../store';
 import { auth } from '../firebase';
 
 const AuthContext = React.createContext();
@@ -10,7 +10,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
     
-    const { currentUser, setCurrentUser } = notesStore();
+    const { currentUser, setCurrentUser } = useStore();
     const [ loading, setLoading ] = useState(true);
 
     function register(user) {

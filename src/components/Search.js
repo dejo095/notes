@@ -1,11 +1,11 @@
 import React from 'react'
 import { MdSearch, MdHighlightOff } from 'react-icons/md';
-import notesStore from '../store';
+import useStore from '../store';
 import styled from 'styled-components';
 
 function Search() {
 
-    const { filter, setFilter } = notesStore();
+    const { filter, setFilter } = useStore();
 
     return (
         <SearchBar>

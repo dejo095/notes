@@ -1,6 +1,6 @@
 import create from 'zustand';
 import firebase from 'firebase';
-import { db } from '../firebase';
+import { db } from './firebase';
 import { devtools } from 'zustand/middleware';
 
 const store = (set, get) => ({
@@ -41,6 +41,6 @@ const store = (set, get) => ({
     count: () => get().notes.length,
 });
 
-const notesStore = create(devtools(store));
+const useStore = create(devtools(store));
 
-export default notesStore;
+export default useStore;

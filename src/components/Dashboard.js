@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { db } from '../firebase'
-import notesStore from '../store/index'
+import useStore from '../store'
 
 import Navbar from './Navbar';
 import Search from './Search';
@@ -10,7 +10,7 @@ import Alert from '@material-ui/lab/Alert';
 function Dashboard() {
 
   const [error, setError ] = useState('');
-  const { setNotes, currentUser } = notesStore();
+  const { setNotes, currentUser } = useStore();
   
   useEffect(() => {
     db.collection('notes')

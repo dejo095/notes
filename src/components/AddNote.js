@@ -1,10 +1,10 @@
 import React from 'react'
-import notesStore from '../store';
+import useStore from '../store';
 import styled from 'styled-components';
 
 function AddNote() {
     
-    const { input, setInput, createNote } = notesStore();
+    const { input, setInput, createNote } = useStore();
 
     return (
         <NoteDiv className="new">

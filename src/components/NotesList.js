@@ -1,5 +1,5 @@
 import React from 'react';
-import notesStore from '../store/index';
+import useStore from '../store';
 import styled from 'styled-components';
 
 import Note from './Note';
@@ -7,7 +7,7 @@ import AddNote from '../components/AddNote';
 
 function NotesList() {
 
-    const { filter, notes } = notesStore();
+    const { filter, notes } = useStore();
 
     return (
         <List>

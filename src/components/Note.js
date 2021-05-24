@@ -1,11 +1,11 @@
 import React from 'react'
-import notesStore from '../store';
+import useStore from '../store';
 import styled from 'styled-components';
 import { VscTrash } from 'react-icons/vsc';
 
 function Note(props) {
 
-    const { removeNote } = notesStore();
+    const { removeNote } = useStore();
 
     return (
         <NoteDiv>

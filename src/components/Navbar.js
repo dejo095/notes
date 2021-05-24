@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import notesStore from '../store/index';
+import useStore from '../store';
 import { useHistory } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -8,8 +8,8 @@ import styled from 'styled-components';
 function Navbar() {
 
     const [error, setError ] = useState('');
-    const count = notesStore(state => state.count());
-    const currentUser = notesStore(state => state.currentUser);
+    const count = useStore(state => state.count());
+    const currentUser = useStore(state => state.currentUser);
     const { logout } = useAuth();
     const history = useHistory();
 
