@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useAuth } from '../contexts/AuthContext';
+import { auth } from '../firebase';
 import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,8 +15,6 @@ function Register() {
     const [message, setMessage ] = useState('');
     const [error, setError ] = useState('');
 
-    const { resetPassword } = useAuth();
-
     const classes = useStyles();
 
     const handleSubmit = async (e) => {
@@ -25,7 +23,7 @@ function Register() {
             setError('');
             setMessage('');
             setLoading(true);
-            await resetPassword(email);
+            await auth.sendPasswordResetEmail(email);
             setEmail('');
             setMessage('Check your mail inbox for password reset link');
         } catch {

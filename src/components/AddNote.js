@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
+import { db } from '../firebase';
+import firebase from 'firebase';
 import useStore from '../store';
 import styled from 'styled-components';
 
 function AddNote() {
     
-    const saveNote = useStore(state => state.saveNote);
     const noteMinChars = useStore(state => state.noteMinChars);
     const noteMaxChars = useStore(state => state.noteMaxChars);
+    const currentUser = useStore(state => state.currentUser);
 
     const [ noteInput, setNoteInput ] = useState('');
     const [ valid, setValid ] = useState(false);
@@ -24,7 +26,13 @@ function AddNote() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        saveNote(noteInput);
+        
+        db.collection('notes').add({
+            owner: currentUser.uid,
+            content: noteInput,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
         setNoteInput('');
         setValid(false);
     }

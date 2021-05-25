@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { db } from '../firebase'
 import useStore from '../store'
 
+import styled from 'styled-components';
 import Navbar from './Navbar';
 import Search from './Search';
 import NotesList from './NotesList';
@@ -35,13 +36,17 @@ function Dashboard() {
   }, []);
 
   return (
-    <div>
+    <DashPanel>
       <Navbar />
       <Search />
       { error && <Alert severity="error">{ error }</Alert> }
       <NotesList />
-    </div>
+    </DashPanel>
   )
 }
 
 export default Dashboard
+
+const DashPanel = styled.div`
+  width: 100%;
+`
