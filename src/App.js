@@ -31,10 +31,8 @@ function App() {
 export default App;
 
 const Container = styled.main`
-    max-width: 100%;
+    width: 100%;
     display: flex;
-    align-content: center;
+    align-items: center;
     flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
 `

@@ -1,36 +1,37 @@
 import React, { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
+
+import { makeStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 function Register() {
 
-    const [user, setUser ] = useState({email: "", password: ""});
+    const [email, setEmail ] = useState('');
     const [loading, setLoading ] = useState(false);
     const [message, setMessage ] = useState('');
     const [error, setError ] = useState('');
 
     const { resetPassword } = useAuth();
 
-    const handleSubmit = async (e) => {
-        
-        e.preventDefault();
+    const classes = useStyles();
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
             setError('');
             setMessage('');
             setLoading(true);
-            await resetPassword(user.email);
-            setMessage('Check your email inbox for reset password link');
+            await resetPassword(email);
+            setEmail('');
+            setMessage('Check your mail inbox for password reset link');
         } catch {
             setError('Failed to reset password!');
         }
-
         setLoading(false);
-
     } 
 
     return (
@@ -44,16 +45,17 @@ function Register() {
             <form onSubmit={handleSubmit} className="form" autoComplete="off">
 
                 <TextField 
-                    value={user.email} 
-                    onChange={e => setUser({ ...user, email: e.target.value })} 
+                    onChange={e => setEmail(e.target.value)} 
                     type="email" 
-                    label="Email" 
+                    label="Email"
+                    className={classes.textField}
                 />
                 <Button 
                     type="submit" 
                     disabled={loading} 
                     variant="contained" 
                     color="primary" 
+                    className={classes.button}
                     disableElevation
                 >Reset</Button>
 
@@ -70,13 +72,8 @@ const LoginPanel = styled.div`
     margin-top: 120px;
     width: 400px;
     display: flex;
-    flex-wrap: nowrap;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    align-content: center;
-    margin-left: auto;
-    margin-right: auto;
     background-color: #ECF0F1;
     border: 2px solid black;
     border-radius: 12px;
@@ -84,7 +81,23 @@ const LoginPanel = styled.div`
     .form {
         display: flex;
         flex-direction: column;
+        align-items: center;
 
-      
+        p {
+            margin: 10px auto;
+        }
     }
 `
+
+const useStyles = makeStyles({
+    textField: {
+      marginBottom: 16,
+      minWidth: 300,
+    },
+    button: {
+        width: 160,
+        marginTop: 20,
+        paddingTop: 12,
+        paddingBottom: 12,
+    }
+  });
