@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { auth } from './firebase';
-import useCredentialsStore from './credentialsStore';
+import useStore from './store';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from './PrivateRoute';
 
@@ -13,7 +13,7 @@ import UpdateProfile from "./components/UpdateProfile";
 
 function App() {
 
-  const setCurrentUser = useCredentialsStore(state => state.setCurrentUser);
+  const setCurrentUser = useStore(state => state.setCurrentUser);
 
    // run this on mount just once
    useEffect(() => {

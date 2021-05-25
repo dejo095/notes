@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { auth } from '../firebase';
 import useStore from '../store';
-import useCredentialsStore from '../credentialsStore';
 import { useHistory } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -10,15 +9,16 @@ function Navbar() {
 
     const [error, setError ] = useState('');
     const count = useStore(state => state.count());
-    const currentUser = useCredentialsStore(state => state.currentUser);
-    // const setLogout = useCredentialsStore(state => state.setLogout);
+    const appName = useStore(state => state.appName);
+    const currentUser = useStore(state => state.currentUser);
+    const setCurrentUser = useStore(state => state.setCurrentUser);
     const history = useHistory();
 
     const handleLogout = async () => {
         setError('');
         try {
             await auth.signOut();
-            // await setLogout();
+            setCurrentUser(null);
             history.push('/login');
         } catch {
             setError('Error occured during logout!')
@@ -27,9 +27,13 @@ function Navbar() {
 
     return (
         <Nav>
-            <h1>NotesApp</h1>
+            <h1>
+                {appName}
+                <p className="undertitle">by Dejo 2021</p>
+            </h1>
+
             <Counter>
-                <h3><small>Logged in as: </small><a onClick={handleLogout}>{ currentUser && currentUser.displayName || currentUser.email }</a></h3>
+                <h3><small></small><a onClick={handleLogout}>{ currentUser && currentUser.displayName || currentUser && currentUser.email }</a></h3>
                 <>
                 { count > 0 
                     ? <p>You have <span><strong>{ count }</strong></span> notes!</p> 
@@ -48,7 +52,8 @@ const Nav = styled.div`
     height: 80px;
     padding: 10px;
     box-sizing: border-box;
-    background-color: #462446;
+    background-color: #2c3e50;
+    border-bottom: 2px solid #253441;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -57,7 +62,15 @@ const Nav = styled.div`
         flex:1;
         color: #EB6B56;
         text-shadow: 0px 1px 2px black;
+    
+        .undertitle {
+            color: white;
+            font-size: xx-small;
+            margin-left: 20px;
+            margin-top: -6px;
+        }
     }
+
 `
 
 const Counter = styled.div`

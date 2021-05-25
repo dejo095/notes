@@ -9,10 +9,7 @@ function Search() {
     const [ filterValue, setFilterValue ] = useState('');
 
     const handleChange = (e) => {
-        setFilterValue(e.target.value);
-        if(e.target.value.length >= 3) {
-            setFilter(e.target.value);
-        }
+        setFilter(e.target.value);
     }
 
     const handleReset = (e) => {
@@ -25,7 +22,6 @@ function Search() {
         <SearchBar>
             <MdSearch className="search-icon" size="1.5em" />
             <Input 
-                value={filterValue}
                 type="text" 
                 placeholder="Type to filter notes..." 
                 onChange={handleChange} 

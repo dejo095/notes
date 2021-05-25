@@ -1,27 +1,33 @@
 import React from 'react'
 import { db } from '../firebase';
+import firebase from 'firebase';
+import moment from 'moment';
 
 import styled from 'styled-components';
 import { VscTrash } from 'react-icons/vsc';
 
 function Note(props) {
 
-    const date = props.noteData.timestamp?.toDate().toLocaleString();
+    const createdOn = moment(props.noteData.timestamp.toDate().toLocaleString()).format('LLL');
+    const currentDate = new Date();
+    const age = Number(moment(currentDate).diff(createdOn, 'days'));
 
     const handleOnClick = (e) => {
-        e.preventDefault();
+        e.
+        preventDefault();
 
-        db
-        .collection('notes')
-        .doc(props.noteData.id)
-        .delete();
+        db.
+        collection('notes').
+        doc(props.noteData.id).
+        delete();
     }
 
     return (
         <NoteDiv>
             <span>{props.noteData.content}</span>
             <div className="note-footer">
-                <small>created: {date}</small>
+                <small>added {age} days ago</small>
+                <small className="deadline">deadline</small>
                 <VscTrash onClick={handleOnClick} className="delete-icon" size="1.3em" />
             </div>
         </NoteDiv>
@@ -59,11 +65,12 @@ const NoteDiv = styled.div`
 
         small {
             font-size: x-small;
+            color: black;
         }
 
         .delete-icon {
             cursor:pointer;
-            color: red;
+            color: #353b48;
 
             &:hover {
                 transform: scale(1.3);

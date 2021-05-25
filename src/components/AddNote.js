@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 import { db } from '../firebase';
 import firebase from 'firebase';
 import useStore from '../store';
-import useCredentialsStore from '../credentialsStore';
 import styled from 'styled-components';
 
 function AddNote() {
     
     const noteMinChars = useStore(state => state.noteMinChars);
     const noteMaxChars = useStore(state => state.noteMaxChars);
-    const currentUser = useCredentialsStore(state => state.currentUser);
+    const currentUser = useStore(state => state.currentUser);
 
     const [ noteInput, setNoteInput ] = useState('');
     const [ valid, setValid ] = useState(false);

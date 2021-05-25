@@ -1,10 +1,10 @@
 import React from 'react'
+import useStore from './store';
 import { Redirect, Route } from 'react-router-dom'
-import useCredentialsStore from './credentialsStore';
 
 function PrivateRoute({ component: Component, ...rest}) {
 
-  const currentUser = useCredentialsStore(state => state.currentUser);
+  const currentUser = useStore(state => state.currentUser);
 
   return (
     <Route
