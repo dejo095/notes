@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { db } from '../firebase'
 import useStore from '../store'
+import useCredentialsStore from '../credentialsStore';
 
 import Navbar from './Navbar';
 import Search from './Search';
@@ -12,7 +13,7 @@ function Dashboard() {
   const [ error, setError ] = useState('');
 
   const setNotes = useStore(state => state.setNotes);
-  const currentUser = useStore(state => state.currentUser);
+  const currentUser = useCredentialsStore(state => state.currentUser);
   
   useEffect(() => {
     try {

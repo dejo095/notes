@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { useAuth } from '../contexts/AuthContext';
-import Alert from '@material-ui/lab/Alert';
+import { auth } from '../firebase';
+import { Link, useHistory } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Link, useHistory } from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert';
 
 function Register() {
 
@@ -14,7 +14,6 @@ function Register() {
     const [loading, setLoading ] = useState(false);
     const [error, setError ] = useState('');
 
-    const { register } = useAuth();
     const history = useHistory();
 
     const classes = useStyles();
@@ -24,7 +23,7 @@ function Register() {
         try {
             setError('');
             setLoading(true);
-            await register(user);
+            await auth.createUserWithEmailAndPassword(user.email, user.password);
             history.push('/');
         } catch {
             setError('Failed to create an account!');

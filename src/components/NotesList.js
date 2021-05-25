@@ -1,7 +1,7 @@
 import React from 'react';
 import useStore from '../store';
-import styled from 'styled-components';
 
+import styled from 'styled-components';
 import Note from './Note';
 import AddNote from '../components/AddNote';
 

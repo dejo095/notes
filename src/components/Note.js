@@ -1,17 +1,20 @@
 import React from 'react'
-import useStore from '../store';
+import { db } from '../firebase';
+
 import styled from 'styled-components';
 import { VscTrash } from 'react-icons/vsc';
 
 function Note(props) {
 
-    const removeNote = useStore(state => state.removeNote);
-
     const date = props.noteData.timestamp?.toDate().toLocaleString();
 
     const handleOnClick = (e) => {
         e.preventDefault();
-        removeNote(props.noteData.id);
+
+        db
+        .collection('notes')
+        .doc(props.noteData.id)
+        .delete();
     }
 
     return (

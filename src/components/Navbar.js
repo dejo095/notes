@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import { auth } from '../firebase';
 import useStore from '../store';
+import useCredentialsStore from '../credentialsStore';
 import { useHistory } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -9,14 +10,15 @@ function Navbar() {
 
     const [error, setError ] = useState('');
     const count = useStore(state => state.count());
-    const currentUser = useStore(state => state.currentUser);
-    const { logout } = useAuth();
+    const currentUser = useCredentialsStore(state => state.currentUser);
+    // const setLogout = useCredentialsStore(state => state.setLogout);
     const history = useHistory();
 
     const handleLogout = async () => {
         setError('');
         try {
-            await logout();
+            await auth.signOut();
+            // await setLogout();
             history.push('/login');
         } catch {
             setError('Error occured during logout!')

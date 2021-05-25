@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useAuth } from '../contexts/AuthContext';
+import { auth } from '../firebase';
 import { Link, useHistory } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
+// import useCredentialsStore from '../credentialsStore';
 
 function Login() {
 
@@ -14,7 +15,6 @@ function Login() {
     const [loading, setLoading ] = useState(false);
     const [error, setError ] = useState('');
 
-    const { login } = useAuth();
     const history = useHistory();
 
     const classes = useStyles();
@@ -24,7 +24,7 @@ function Login() {
         try {
             setError('');
             setLoading(true);
-            await login(user);
+            await auth.signInWithEmailAndPassword(user.email, user.password);
             history.push('/');
         } catch {
             setError('Failed to login!');
