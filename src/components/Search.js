@@ -10,6 +10,7 @@ function Search() {
 
     const handleChange = (e) => {
         setFilter(e.target.value);
+        setFilterValue(e.target.value);
     }
 
     const handleReset = (e) => {
@@ -23,6 +24,7 @@ function Search() {
             <MdSearch className="search-icon" size="1.5em" />
             <Input 
                 type="text" 
+                value={filterValue}
                 placeholder="Type to filter notes..." 
                 onChange={handleChange} 
             />
