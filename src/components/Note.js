@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { db } from '../firebase';
 import moment from 'moment';
 
@@ -11,7 +11,8 @@ function Note(props) {
     const currentDate = new Date();
     const age = Number(moment(currentDate).diff(createdOn, 'days'));
 
-    const [ expiringIn, setExpiringIn ] = useState(3);
+    const formattedDeadline = moment(props.noteData.deadline?.toDate().toLocaleString()).format('LLL');
+    const expiresIn = Number(moment(formattedDeadline).diff(currentDate, 'days'));
 
     const handleOnClick = (e) => {
         e.
@@ -27,7 +28,7 @@ function Note(props) {
         <NoteDiv>
             <div className="header">
                 { age <= 0 ? <span>Added today</span> : <span>Added {age} days ago</span> }
-                <span>Expiring in {expiringIn} days!</span>
+                { expiresIn <= 0 || expiresIn == null || expiresIn == '' ? <span></span> : <span>Expiring in {expiresIn} days!</span> }
                 </div>
             <div className="content">
                 <span>{props.noteData.content}</span></div>

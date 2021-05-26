@@ -1,13 +1,18 @@
 import React from 'react'
+import useStore from '../store';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
 function DatePicker() {
 
+  const deadline = useStore(state => state.deadline);
+  const setDeadline = useStore(state => state.setDeadline);
   const classes = useStyles();
 
   const handleDateChange = (e) => {
-    console.log(e.target.value);
+    if(e.target.value != null) {
+      setDeadline(e.target.value);
+    }
   }
 
   return (
@@ -17,7 +22,7 @@ function DatePicker() {
           id="deadline"
           label="Add Deadline"
           type="datetime-local"
-          // defaultValue="2017-05-24T10:30"
+          value={deadline}
           onChange={handleDateChange}
           className={classes.textField}
           InputLabelProps={{
@@ -37,8 +42,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
   },
   textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    marginRight: 10,
     width: 200,
   },
 }));

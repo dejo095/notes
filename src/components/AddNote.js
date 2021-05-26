@@ -8,9 +8,13 @@ import DatePicker from './DatePicker';
 
 function AddNote() {
     
-    const noteMinChars = useStore(state => state.noteMinChars);
-    const noteMaxChars = useStore(state => state.noteMaxChars);
-    const currentUser = useStore(state => state.currentUser);
+    const {
+        noteMinChars,
+        noteMaxChars,
+        currentUser,
+        deadline,
+        setDeadline
+    } = useStore();
 
     const [ noteInput, setNoteInput ] = useState('');
     const [ valid, setValid ] = useState(false);
@@ -28,24 +32,31 @@ function AddNote() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        let _deadline = null;
+        if(deadline != null && deadline != '' && deadline.length > 0) {
+            _deadline = firebase.firestore.Timestamp.fromDate( new Date(deadline) );
+        }
         
         db.collection('notes').add({
             owner: currentUser.uid,
             content: noteInput,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            deadline: _deadline
         });
 
         setNoteInput('');
+        setDeadline('');
         setValid(false);
     }
 
     return (
         <AddNoteDiv className="new">
             <Textarea value={noteInput} onChange={handleChange} rows="7" placeholder="Type to add new note" />
-            <DatePicker />
+            {/* <small><strong>{ noteMaxChars - Number(noteInput.length) }</strong> chars remaining</small> */}
             <div className="note-footer">
-                <small><strong>{ noteMaxChars - Number(noteInput.length) }</strong> chars remaining</small>
-                <Button disabled={!valid} onClick={handleSubmit} className="save">Save</Button>
+            <Button disabled={!valid} onClick={handleSubmit} className="save">Save</Button>
+            <DatePicker />
             </div>
         </AddNoteDiv>
     )
@@ -82,7 +93,7 @@ const AddNoteDiv = styled.div`
 const Button = styled.button`
     background-color: #e1e1e1d2;
     border: none;
-    border-radius: 15px;
+    border-radius: 8px;
     padding: 5px 10px;
 
     &:hover {
@@ -95,7 +106,7 @@ const Button = styled.button`
 
 const Textarea = styled.textarea`
     background-color: #47B39D;
-    border: none;
+    /* border: none; */
     resize: none;
     font-size: large;
 

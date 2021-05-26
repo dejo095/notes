@@ -8,13 +8,15 @@ const store = (set, get) => ({
     noteMinChars: 5,
     noteMaxChars: 200,
     filter: "",
-    setFilter: (text) => set(state => state.filter = text),
+    setFilter: (filter) => set({filter}),
     notes: [],
     setNotes: (notes) => set((state) => ({
         ...state,
         notes
     })),
-    count: () => get().notes.length
+    count: () => get().notes.length,
+    deadline: '',
+    setDeadline: (deadline) => set({deadline})
 });
 
 const useStore = create(devtools(store));

@@ -9,6 +9,7 @@ function NotesList() {
 
     const filter = useStore(state => state.filter);
     const notes = useStore(state => state.notes);
+    const deadline = useStore(state => state.deadline);
 
     return (
         <List>
