@@ -27,6 +27,7 @@ function Dashboard() {
               id: doc.id, 
               content: doc.data().content,
               timestamp: doc.data().timestamp,
+              deadline: doc.data().deadline
             }
           }))
         })

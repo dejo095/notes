@@ -9,6 +9,7 @@ function NotesList() {
 
     const filter = useStore(state => state.filter);
     const notes = useStore(state => state.notes);
+    const deadline = useStore(state => state.deadline);
 
     return (
         <List>
@@ -26,6 +27,6 @@ export default NotesList
 const List = styled.div`
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     margin: 10px 10px;
 `
