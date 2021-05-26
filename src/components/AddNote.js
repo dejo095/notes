@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { db } from '../firebase';
 import firebase from 'firebase';
 import useStore from '../store';
+
 import styled from 'styled-components';
+import DatePicker from './DatePicker';
 
 function AddNote() {
     
@@ -40,6 +42,7 @@ function AddNote() {
     return (
         <AddNoteDiv className="new">
             <Textarea value={noteInput} onChange={handleChange} rows="7" placeholder="Type to add new note" />
+            <DatePicker />
             <div className="note-footer">
                 <small><strong>{ noteMaxChars - Number(noteInput.length) }</strong> chars remaining</small>
                 <Button disabled={!valid} onClick={handleSubmit} className="save">Save</Button>
