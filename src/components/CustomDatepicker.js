@@ -3,7 +3,7 @@ import useStore from '../store';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
-function DatePicker() {
+function CustomDatepicker() {
   const deadline = useStore(state => state.deadline);
   const setDeadline = useStore(state => state.setDeadline);
   const classes = useStyles();
@@ -33,7 +33,7 @@ function DatePicker() {
   );
 }
 
-export default DatePicker;
+export default CustomDatepicker;
 
 const useStyles = makeStyles(theme => ({
   container: {

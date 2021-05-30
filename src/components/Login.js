@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { auth, provider } from '../firebase';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { Link, useHistory } from 'react-router-dom';
 
 import styled from 'styled-components';

@@ -4,8 +4,7 @@ import useStore from './store';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 
-import { theme } from './main-theme';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import Dashboard from './components/Dashboard';
 import Register from './components/Register';
 import Login from './components/Login';
@@ -28,28 +27,27 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container>
-        <Router>
-          <Switch>
-            <PrivateRoute exact path="/" component={Dashboard} />
-            <PrivateRoute path="/update-profile" component={UpdateProfile} />
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
-            <Route path="/forgot-password" component={ForgotPassword} />
-          </Switch>
-        </Router>
-      </Container>
-    </ThemeProvider>
+    <Container>
+      <Router>
+        <Switch>
+          <PrivateRoute exact path="/" component={Dashboard} />
+          <PrivateRoute path="/update-profile" component={UpdateProfile} />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
+          <Route path="/forgot-password" component={ForgotPassword} />
+        </Switch>
+      </Router>
+    </Container>
   );
 }
 
 export default App;
 
 const Container = styled.main`
+  background: ${props => props.theme.mainBack};
+  min-height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: ${props => props.theme.main}; ;
 `;

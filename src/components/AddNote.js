@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { db } from '../firebase';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import useStore from '../store';
 
 import styled from 'styled-components';
-import DatePicker from './DatePicker';
+import CustomDatepicker from './CustomDatepicker';
+import CustomCheckbox from './CustomCheckbox';
 
 function AddNote() {
   const { noteMinChars, noteMaxChars, currentUser, deadline, setDeadline } = useStore();
@@ -51,15 +52,18 @@ function AddNote() {
         rows="7"
         placeholder="Type to add new note"
       />
-      <div className="note-footer">
+      <MidContent>
+        <CustomCheckbox />
+        <CustomDatepicker />
+      </MidContent>
+      <NoteFooter>
         <small>
           <strong>{noteMaxChars - Number(noteInput.length)}</strong> chars remaining
         </small>
-        <Button disabled={!valid} onClick={handleSubmit} className="save">
+        <Button disabled={!valid} onClick={handleSubmit}>
           Save
         </Button>
-        {/* <DatePicker /> */}
-      </div>
+      </NoteFooter>
     </AddNoteDiv>
   );
 }
@@ -67,7 +71,7 @@ function AddNote() {
 export default AddNote;
 
 const AddNoteDiv = styled.div`
-  background-color: #ffc153;
+  background-color: ${props => props.theme.noteBack};
   border-radius: 10px;
   padding: 6px;
   height: 100%;
@@ -80,16 +84,16 @@ const AddNoteDiv = styled.div`
   overflow-y: hidden;
 
   &.new {
-    background-color: #47b39d;
+    background-color: ${props => props.theme.addNewNoteBack};
   }
+`;
 
-  .note-footer {
-    color: #505050;
-    padding-left: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+const NoteFooter = styled.div`
+  color: #505050;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Button = styled.button`
@@ -106,8 +110,14 @@ const Button = styled.button`
   }
 `;
 
+const MidContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+`;
+
 const Textarea = styled.textarea`
-  background-color: #47b39d;
+  background-color: ${props => props.theme.addNewNoteBack};
   /* border: none; */
   resize: none;
   font-size: large;
