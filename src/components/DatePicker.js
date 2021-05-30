@@ -1,19 +1,18 @@
-import React from 'react'
+import React from 'react';
 import useStore from '../store';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
 function DatePicker() {
-
   const deadline = useStore(state => state.deadline);
   const setDeadline = useStore(state => state.setDeadline);
   const classes = useStyles();
 
-  const handleDateChange = (e) => {
-    if(e.target.value != null) {
+  const handleDateChange = e => {
+    if (e.target.value != null) {
       setDeadline(e.target.value);
     }
-  }
+  };
 
   return (
     <div>
@@ -26,17 +25,17 @@ function DatePicker() {
           onChange={handleDateChange}
           className={classes.textField}
           InputLabelProps={{
-          shrink: true,
+            shrink: true,
           }}
         />
       </form>
     </div>
-  )
+  );
 }
 
-export default DatePicker
+export default DatePicker;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
