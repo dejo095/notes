@@ -53,13 +53,17 @@ function AddNote() {
         placeholder="Type to add new note"
       />
       <MidContent>
-        <CustomCheckbox />
-        <CustomDatepicker />
-      </MidContent>
-      <NoteFooter>
+        <div className="options">
+          <CustomCheckbox />
+          <small>Set Deadline</small>
+        </div>
         <small>
           <strong>{noteMaxChars - Number(noteInput.length)}</strong> chars remaining
         </small>
+        {/* <CustomDatepicker /> */}
+      </MidContent>
+      <NoteFooter>
+        <small></small>
         <Button disabled={!valid} onClick={handleSubmit}>
           Save
         </Button>
@@ -112,8 +116,19 @@ const Button = styled.button`
 
 const MidContent = styled.div`
   display: flex;
-  flex-direction: row;
-  align-content: space-between;
+  align-items: center;
+  justify-content: space-between;
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    small {
+      margin: 0px auto;
+    }
+  }
 `;
 
 const Textarea = styled.textarea`

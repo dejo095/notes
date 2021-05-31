@@ -7,8 +7,8 @@ function CustomCheckbox() {
   return (
     <FormLabel
       value="encrypt"
-      control={<GreyCheckbox color="primary" />}
-      label="Encrypt message?"
+      control={<GreyCheckbox size="small" />}
+      label="Encrypt contents?"
       labelPlacement="start"
     />
   );
@@ -28,8 +28,10 @@ const GreyCheckbox = withStyles({
 
 const FormLabel = withStyles({
   root: {
-    width: '140px',
     color: '#6C8784',
-    fontSize: '8px',
+  },
+  label: {
+    fontSize: '12px',
+    color: '#6C8784',
   },
 })(props => <FormControlLabel {...props} />);

@@ -15,21 +15,21 @@ function CustomDatepicker() {
   };
 
   return (
-    <div>
-      <form className={classes.container} noValidate>
-        <TextField
-          id="deadline"
-          label="Add Deadline"
-          type="datetime-local"
-          value={deadline}
-          onChange={handleDateChange}
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      </form>
-    </div>
+    <form className={classes.container} noValidate>
+      <TextField
+        id="deadline"
+        label="Add Deadline"
+        type="datetime-local"
+        value={deadline}
+        margin="dense"
+        size="small"
+        onChange={handleDateChange}
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    </form>
   );
 }
 
@@ -38,10 +38,9 @@ export default CustomDatepicker;
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flex: 1,
   },
   textField: {
-    marginRight: 10,
-    width: 200,
+    width: 180,
   },
 }));

@@ -6,8 +6,8 @@ body {
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-color: #34495e; */
-  /* background: linear-gradient(45deg, #9b59b6 10%, #34495E 60%) */
+  --main-backgroundColor: #34495e;
+  --main-backgroundGradient: linear-gradient(45deg, #9b59b6 10%, #34495e 60%);
 }
 
 code {
