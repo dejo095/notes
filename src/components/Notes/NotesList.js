@@ -1,9 +1,10 @@
 import React from 'react';
-import useStore from '../store';
 
-import styled from 'styled-components';
+import useStore from '../../store';
 import Note from './Note';
-import AddNote from '../components/AddNote';
+import AddNote from './AddNote';
+
+import './note.css';
 
 function NotesList() {
   const filter = useStore(state => state.filter);
@@ -11,7 +12,7 @@ function NotesList() {
   const deadline = useStore(state => state.deadline);
 
   return (
-    <List>
+    <div className="notes-list">
       <AddNote />
 
       {notes
@@ -19,15 +20,8 @@ function NotesList() {
         .map(note => (
           <Note key={note.id} noteData={note} />
         ))}
-    </List>
+    </div>
   );
 }
 
 export default NotesList;
-
-const List = styled.div`
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  margin: 10px 10px;
-`;

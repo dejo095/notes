@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import useStore from '../store';
-
-import styled from 'styled-components';
-import Navbar from './Navbar';
-import Search from './Search';
-import NotesList from './NotesList';
 import Alert from '@material-ui/lab/Alert';
+
+import Navbar from './Navbar/Navbar';
+import Search from './Search';
+import NotesList from './Notes/NotesList';
+
+import './dashboard.css';
 
 function Dashboard() {
   const [error, setError] = useState('');
@@ -38,17 +39,13 @@ function Dashboard() {
   }, []);
 
   return (
-    <DashPanel>
+    <div className="dashboard">
       <Navbar />
       <Search />
       {error && <Alert severity="error">{error}</Alert>}
       <NotesList />
-    </DashPanel>
+    </div>
   );
 }
 
 export default Dashboard;
-
-const DashPanel = styled.div`
-  width: 100%;
-`;

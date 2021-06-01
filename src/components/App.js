@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
-import { auth } from './firebase';
-import useStore from './store';
+import { auth } from '../firebase';
+import useStore from '../store';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
+import PrivateRoute from '../PrivateRoute';
+import './app.css';
 
-import styled from 'styled-components';
-import Dashboard from './components/Dashboard';
-import Register from './components/Register';
-import Login from './components/Login';
-import ForgotPassword from './components/ForgotPassword';
-import UpdateProfile from './components/UpdateProfile';
+import Dashboard from './Dashboard';
+import Register from './Auth/Register';
+import Login from './Auth/Login';
+import ForgotPassword from './Auth/ForgotPassword';
+import UpdateProfile from './Auth/UpdateProfile';
 
 function App() {
   const setCurrentUser = useStore(state => state.setCurrentUser);
@@ -27,7 +27,7 @@ function App() {
   }, []);
 
   return (
-    <Container>
+    <div className="main-container">
       <Router>
         <Switch>
           <PrivateRoute exact path="/" component={Dashboard} />
@@ -37,17 +37,8 @@ function App() {
           <Route path="/forgot-password" component={ForgotPassword} />
         </Switch>
       </Router>
-    </Container>
+    </div>
   );
 }
 
 export default App;
-
-const Container = styled.main`
-  background: ${props => props.theme.mainBack};
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;

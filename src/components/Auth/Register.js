@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { Link, useHistory } from 'react-router-dom';
+import './login.css';
 
-import { makeStyles } from '@material-ui/core/styles';
-import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
@@ -18,8 +17,6 @@ function Register() {
   const [error, setError] = useState('');
 
   const history = useHistory();
-
-  const classes = useStyles();
 
   const emailRegex = /^\S+@\S+\.\S+$/;
 
@@ -45,7 +42,7 @@ function Register() {
   };
 
   return (
-    <LoginPanel>
+    <div className="login">
       <h1>Register</h1>
 
       {error && <Alert severity="error">{error}</Alert>}
@@ -56,28 +53,24 @@ function Register() {
           label="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
-          className={classes.textField}
         />
         <TextField
           type="password"
           label="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
-          className={classes.textField}
         />
         <TextField
           type="password"
           label="Repeat Password"
           value={passwordRepeat}
           onChange={e => setPasswordRepeat(e.target.value)}
-          className={classes.textField}
         />
         <Button
           type="submit"
           disabled={!isValid || isLoading}
           variant="contained"
           color="primary"
-          className={classes.button}
           disableElevation
         >
           Register me
@@ -87,42 +80,8 @@ function Register() {
           Already registered? <Link to="/login">Login</Link>
         </p>
       </form>
-    </LoginPanel>
+    </div>
   );
 }
 
 export default Register;
-
-const LoginPanel = styled.div`
-  margin-top: 120px;
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ecf0f1;
-  border: 2px solid black;
-  border-radius: 12px;
-
-  .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    p {
-      margin: 10px auto;
-    }
-  }
-`;
-
-const useStyles = makeStyles({
-  textField: {
-    marginBottom: 16,
-    minWidth: 300,
-  },
-  button: {
-    width: 160,
-    marginTop: 20,
-    paddingTop: 12,
-    paddingBottom: 12,
-  },
-});

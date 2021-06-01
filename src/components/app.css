@@ -1,0 +1,15 @@
+body {
+  --main-backgroundColor: #34495e;
+  --main-backgroundGradient: linear-gradient(45deg, #9b59b6 10%, #34495e 60%);
+  --note-background: #f7cd4a;
+  --note-addnewbackground: #97ce68;
+}
+
+.main-container {
+  background: var(--main-backgroundGradient);
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}

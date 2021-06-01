@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { auth, provider } from '../firebase';
+import { auth, provider } from '../../firebase';
 import firebase from 'firebase/app';
 import { Link, useHistory } from 'react-router-dom';
+import './login.css';
 
-import styled from 'styled-components';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
@@ -16,8 +15,6 @@ function Login() {
   const [error, setError] = useState('');
 
   const history = useHistory();
-
-  const classes = useStyles();
 
   const handleGoogleSubmit = async e => {
     e.preventDefault();
@@ -55,27 +52,21 @@ function Login() {
   };
 
   return (
-    <LoginPanel>
+    <div className="login">
       <h1>Login</h1>
 
-      {error && (
-        <Alert className={classes.alert} severity="error">
-          {error}
-        </Alert>
-      )}
+      {error && <Alert severity="error">{error}</Alert>}
 
       <form className="form" autoComplete="off">
         <TextField
           onChange={e => setUser({ ...user, email: e.target.value })}
           type="email"
           label="Email"
-          className={classes.textField}
         />
         <TextField
           onChange={e => setUser({ ...user, password: e.target.value })}
           type="password"
           label="Password"
-          className={classes.textField}
         />
         <Box width="80%" display="flex" flexDirection="row" justifyContent="space-between">
           <Button
@@ -83,7 +74,6 @@ function Login() {
             disabled={isLoading}
             variant="contained"
             color="secondary"
-            className={classes.button}
             disableElevation
           >
             Gmail login
@@ -93,7 +83,6 @@ function Login() {
             disabled={isLoading}
             variant="contained"
             color="primary"
-            className={classes.button}
             disableElevation
           >
             Email Login
@@ -107,53 +96,8 @@ function Login() {
           Not registered yet? <Link to="/register">Register here</Link>
         </p>
       </form>
-    </LoginPanel>
+    </div>
   );
 }
 
 export default Login;
-
-const LoginPanel = styled.div`
-  margin-top: 120px;
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ecf0f1;
-  border: 2px solid black;
-  border-radius: 12px;
-
-  .form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .buttons {
-      width: 100%;
-    }
-
-    p {
-      margin: 10px auto;
-    }
-  }
-`;
-
-const useStyles = makeStyles({
-  textField: {
-    marginBottom: 16,
-    width: '80%',
-  },
-  button: {
-    width: 160,
-    marginTop: 20,
-    paddingTop: 12,
-    paddingBottom: 12,
-  },
-  alert: {
-    width: '80%',
-    backgroundColor: 'red',
-    color: 'white',
-    marginBottom: 20,
-  },
-});
