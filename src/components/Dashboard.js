@@ -4,7 +4,7 @@ import useStore from '../store';
 import Alert from '@material-ui/lab/Alert';
 
 import Navbar from './Navbar/Navbar';
-import Search from './Search';
+import Search from './Search/Search';
 import NotesList from './Notes/NotesList';
 
 import './dashboard.css';
